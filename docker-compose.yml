@@ -1,0 +1,51 @@
+services:
+  frontend:
+    build:
+      context: frontend/.
+    image: mern-frontend
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "81:80"
+    networks:
+      - mern-net
+
+  backend:
+    build:
+      context: backend/.
+    image: mern-backend
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file:
+      - path: ./mern.env
+    expose:
+      - "5000"
+    restart: always
+    networks:
+      - mern-net
+  
+  db:
+    image: mongo:latest
+    restart: always
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    env_file:
+      - path: ./db.env
+    expose:
+      - "27017"
+    networks:
+      - mern-net
+    volumes:
+      - mern-data:/data/db
+
+networks:
+  mern-net:
+    driver: bridge
+volumes:
+  mern-data:
