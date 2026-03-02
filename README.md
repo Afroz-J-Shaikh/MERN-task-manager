@@ -19,17 +19,17 @@
 ## Setup
 
 1. Create files named "db.env" & "mern.env". 
-   * For "db.env" write"
+   * For "db.env" write :
     ```sh
     MONGO_INITDB_ROOT_USERNAME="admin"
     MONGO_INITDB_ROOT_PASSWORD="your_pass"
     ```
-   * For "mern.env"
+
+   * For "mern.env" write :
      ```sh 
     MONGODB_URL = mongodb://admin:<psswd>@db:27017/mydb?authSource=admin
     ACCESS_TOKEN_SECRET = Rj2S?RVe9[]8-dCS6A**&b5Tsg$gwbg~Bd{*QTK (any-long-string)
     ```
-
 
 2. Run the application
 
