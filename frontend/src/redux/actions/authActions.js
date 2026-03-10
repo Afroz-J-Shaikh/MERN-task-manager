@@ -1,5 +1,5 @@
 import api from "../../api"
-import { LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, LOGOUT, SAVE_PROFILE } from "./actionTypes"
+import { LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, LOGOUT, SAVE_PROFILE } from "./actionTypes.js"
 import { toast } from "react-toastify";
 
 export const postLoginData = (email, password) => async (dispatch) => {
