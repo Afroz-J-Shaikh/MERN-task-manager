@@ -30,7 +30,7 @@ jobs:
       - name: install dependencies
         run: |
           npm install
-          npm audit fix
+          #npm audit fix
           npm run
         working-directory: ${{ matrix.folder }}
 
