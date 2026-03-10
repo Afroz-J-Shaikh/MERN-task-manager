@@ -1,5 +1,4 @@
 import js from "@eslint/js";
-import babelParser from "@babel/eslint-parser";
 
 export default [
   js.configs.recommended,
@@ -7,13 +6,11 @@ export default [
     files: ["**/*.js"],
     languageOptions: {
       ecmaVersion: "latest",
-      sourceType: "commonjs", // backend uses require/module.exports
-      parser: babelParser,
-      parserOptions: {
-        requireConfigFile: false
-      },
-      globals: {
-        ...js.environments.node.globals // enable Node.js globals
+      sourceType: "commonjs",
+    },
+    linterOptions: {
+      env: {
+        node: true
       }
     },
     rules: {
