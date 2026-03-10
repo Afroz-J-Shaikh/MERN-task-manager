@@ -27,7 +27,9 @@ jobs:
         run: npm install --save-dev eslint@9 @eslint/js@9 @babel/eslint-parser @babel/preset-react --legacy-peer-deps
 
       - name: install dependencies
-        run: npm install
+        run: |
+          npm install
+          npm audit fix
 
       - name: run lint
         run: npm run lint actions/setup-node@v6
