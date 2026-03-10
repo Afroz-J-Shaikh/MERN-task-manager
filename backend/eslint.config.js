@@ -4,24 +4,20 @@ import babelParser from "@babel/eslint-parser";
 export default [
   js.configs.recommended,
   {
-    files: ["**/*.js", "**/*.jsx"],
+    files: ["**/*.js"],
     languageOptions: {
       ecmaVersion: "latest",
-      sourceType: "module",
+      sourceType: "commonjs", // backend uses require/module.exports
       parser: babelParser,
       parserOptions: {
-        requireConfigFile: false,
-        babelOptions: {
-          presets: ["@babel/preset-react"]
-        }
+        requireConfigFile: false
       },
       globals: {
-        document: "readonly",
-        window: "readonly"
+        ...js.environments.node.globals // enable Node.js globals
       }
     },
     rules: {
-      "no-unused-vars": ["error", { "varsIgnorePattern": "React|^[A-Z]" }]
+      "no-unused-vars": "warn"
     }
   }
 ];
