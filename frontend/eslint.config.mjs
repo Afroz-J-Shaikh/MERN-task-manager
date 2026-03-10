@@ -1,5 +1,6 @@
 import js from "@eslint/js";
 import babelParser from "@babel/eslint-parser";
+import globals from "globals";
 
 export default [
   js.configs.recommended,
@@ -16,8 +17,8 @@ export default [
         }
       },
       globals: {
-        document: "readonly",
-        window: "readonly"
+        ...globals.browser, // enables window, document, localStorage, etc.
+        ...globals.node     // enables module.exports for config files
       }
     },
     rules: {
