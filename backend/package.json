@@ -20,7 +20,11 @@
     "cors": "^2.8.5",
     "dotenv": "^16.0.0",
     "express": "^4.22.0",
+<<<<<<< dependabot/npm_and_yarn/npm_and_yarn-1373f63000
     "jsonwebtoken": "^8.5.1",
+=======
+    "jsonwebtoken": "^9.0.0",
+>>>>>>> main
     "mongoose": "^6.13.6"
   },
   "devDependencies": {
