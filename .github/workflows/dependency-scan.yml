@@ -1,0 +1,34 @@
+name: dependency scan
+
+on: 
+  push:
+
+jobs:
+ 
+  dependencies-check:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        folder: [backend, frontend]
+
+    defaults:
+      run:
+        working-directory: ${{ matrix.folder }}
+
+    steps:
+     
+      - name: code checkout
+        uses: actions/checkout@v4
+
+      - name: setup node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: install dependencies
+        run: npm ci
+
+      - name: audit dependencies
+        run: npm audit --audit-level=high
