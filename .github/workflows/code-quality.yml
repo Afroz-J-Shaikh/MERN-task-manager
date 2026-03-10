@@ -30,6 +30,7 @@ jobs:
         run: |
           npm install
           npm audit fix
+          npm run
 
       - name: run lint
         run: npm run lint actions/setup-node@v6
