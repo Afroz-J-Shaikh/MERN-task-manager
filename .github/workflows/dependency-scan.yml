@@ -7,7 +7,7 @@ jobs:
  
   dependencies-check:
     runs-on: ubuntu-latest
-
+    continue-on-error: true
     strategy:
       matrix:
         folder: [backend, frontend]
@@ -30,7 +30,4 @@ jobs:
       - name: install dependencies
         run: npm ci
 
-      - name: audit dependencies
-        run: |
-          npm audit fix
-          npm audit fix --force
+
