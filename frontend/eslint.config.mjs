@@ -27,7 +27,8 @@ export default [
     "error",
     {
       "varsIgnorePattern": "React|^[A-Z]",
-      "argsIgnorePattern": "^_"
+      "argsIgnorePattern": "^_",
+      "caughtErrorsIgnorePattern": "^_"
     }
   ]
 }
