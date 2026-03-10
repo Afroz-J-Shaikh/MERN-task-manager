@@ -17,8 +17,10 @@ export default [
         }
       },
       globals: {
-        ...globals.browser, // enables window, document, localStorage, etc.
-        ...globals.node     // enables module.exports for config files
+        window: "readonly",
+        document: "readonly",
+        localStorage: "readonly",
+        module: "readonly" // for config files like tailwind/postcss
       }
     },
     rules: {
