@@ -13,10 +13,18 @@
     "start": "cd backend && node app.js",
     "lint": "eslint ."
   },
-  "keywords": ["MERN", "Tasks","Task manager", "Full stack application"],
+  "keywords": [
+    "MERN",
+    "Tasks",
+    "Task manager",
+    "Full stack application"
+  ],
   "author": "Aayush",
   "license": "ISC",
   "devDependencies": {
-    "concurrently": "^7.1.0"
+    "concurrently": "^9.2.1"
+  },
+  "dependencies": {
+    "express-rate-limit": "^8.3.1"
   }
 }

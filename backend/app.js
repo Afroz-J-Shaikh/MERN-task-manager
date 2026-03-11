@@ -3,24 +3,38 @@ const app = express();
 const mongoose = require("mongoose");
 const path = require("path");
 const cors = require("cors");
+const rateLimit = require("express-rate-limit");
+const mongoSanitize = require("express-mongo-sanitize"); // 1. Added Sanitize Import
 require("dotenv").config();
+
 const authRoutes = require("./routes/authRoutes");
 const taskRoutes = require("./routes/taskRoutes");
 const profileRoutes = require("./routes/profileRoutes");
 
 app.use(express.json());
 app.use(cors());
+app.use(mongoSanitize()); // 2. Added Sanitize Middleware (Fixes NoSQL Injection Error)
+
+// 3. Rate Limiting (Fixes Missing Rate Limiting Alert)
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, 
+  max: 100, 
+  message: "Too many requests from this IP, please try again later.",
+  standardHeaders: true, 
+  legacyHeaders: false,
+});
+app.use("/api", limiter); 
 
 const mongoUrl = process.env.MONGODB_URL;
 
-// Modern Mongoose 7/8 connection (Promises instead of Callbacks)
+// Modern Mongoose 7/8 connection
 mongoose.connect(mongoUrl)
   .then(() => {
     console.log("Mongodb connected...");
   })
   .catch((err) => {
     console.error("Mongodb connection error:", err);
-    process.exit(1); // Stop the app if it can't connect to the DB
+    process.exit(1); 
   });
 
 app.use("/api/auth", authRoutes);
