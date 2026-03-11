@@ -38,7 +38,7 @@ WORKDIR /app
 #COPY --from=builder /etc/passwd /etc/passwd
 #COPY --from=builder /etc/group /etc/group
 #COPY --from=builder --chown=appuser:appgroup /app .
-COPY --from=builder  /app .--chown=appuser:appgroup
+COPY --from=builder  --chown=nonroot:nonroot /app .
 
 # Distroless has a built-in 'nonroot' user (UID 65532)
 USER nonroot
