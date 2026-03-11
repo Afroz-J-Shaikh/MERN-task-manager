@@ -1,6 +1,6 @@
 services:
   frontend:
-    build:
+    #build:
       #context: frontend/.
     image: ${DOCKERHUB_USER}/mern-frontend:${DOCKER_TAG}
     depends_on:
@@ -12,7 +12,7 @@ services:
       - mern-net
 
   backend:
-    build:
+    #build:
       #context: backend/.
     image: ${DOCKERHUB_USER}/mern-backend:${DOCKER_TAG}
     depends_on:
