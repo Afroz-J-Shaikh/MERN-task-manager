@@ -12,6 +12,7 @@ jobs:
   scan:
     needs: [build-push]
     runs-on: ubuntu-latest
+    fail-fast: false
     strategy:
       matrix:
         folder: [backend, frontend]
@@ -33,4 +34,4 @@ jobs:
           image-ref: ${{ vars.DOCKERHUB_USER }}/mern-${{ matrix.folder }}:${{ env.SHORT_SHA }}
           severity: 'CRITICAL,HIGH'
           exit-code: '1'
-          trivyignore: ${{ github.workspace }}/.trivyignore
+          trivyignores: ${{ github.workspace }}/.trivyignore
