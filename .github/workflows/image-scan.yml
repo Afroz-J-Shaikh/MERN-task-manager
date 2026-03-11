@@ -1,0 +1,33 @@
+name: trivy image scan
+
+on: 
+  push:
+
+jobs:
+
+  build-push:
+    uses: ./.github/workflows/docker-build-push.yml
+ 
+  scan:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        folder: [backend, frontend]
+
+    steps:
+        
+      - name: Login to docker
+        uses: docker/login-action@v3
+        with:
+          username: ${{ vars.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Shorten github sha
+        run: echo "SHORT_SHA=${GITHUB_SHA::7}" >> $GITHUB_ENV
+
+      - name: Trivy scanner
+        uses: aquasecurity/trivy-action@0.35.0
+        with: 
+          image-ref: ${{ vars.DOCKERHUB_USER }}/mern-${{ matrix.folder }}:${{ env.SHORT_SHA }}
+          severity: 'CRITICAL,HIGH'
+          exit-code: '1'
