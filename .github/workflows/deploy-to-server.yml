@@ -6,6 +6,9 @@ on:
 jobs:
 
   deploy:
+    env:
+      DOCKERHUB_USER: ${{ vars.DOCKERHUB_USER }}
+      DOCKER_TAG: ${{ format('{0}', substring(github.sha, 0, 7)) }}
     runs-on: ubuntu-latest
       
     steps:
@@ -13,7 +16,7 @@ jobs:
       - name: checkout code
         uses: actions/checkout@v4
 
-      - name: ssh to server and deploy app
+      - name: ssh to server and install dependencies
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -42,6 +45,35 @@ jobs:
             mkdir -p devsecops
 
             echo "Docker setup complete"
+
+      - name: Create .env file from secrets
+        run: |
+          echo "MONGODB_URL=${{ secrets.MONGODB_URL }}" >> mern.env
+          echo "ACCESS_TOKEN_SECRET=${{ secrets.ACCESS_TOKEN_SECRET }}" >> mern.env
+          echo "MONGO_INITDB_ROOT_USERNAME=${{ secrets.MONGO_INITDB_ROOT_USERNAME }}" >> db.env
+          echo "MONGO_INITDB_ROOT_PASSWORD=${{ secrets.MONGO_INITDB_ROOT_PASSWORD }}" >> db.env
+
+      - name: Copy the docker-compose & env files
+        uses: appleboy/scp-action@v1
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          source: "docker-compose.yml,*.env"
+          target: ~/devsecops
+
+      - name: SSH to server & run the app
+        uses: appleboy/scp-action@v1
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login  --username ${{ vars.DOCKERHUB_USER }} --password-stdin
+            cd ~/devsecops
+            docker compose down
+            docker system prune -f
+            docker compose up -d --build --pull always
 
 
 

@@ -1,8 +1,8 @@
 services:
   frontend:
     build:
-      context: frontend/.
-    image: afroz25/mern-frontend
+      #context: frontend/.
+    image: ${DOCKERHUB_USER}/mern-frontend:${DOCKER_TAG}
     depends_on:
       db:
         condition: service_healthy
@@ -13,8 +13,8 @@ services:
 
   backend:
     build:
-      context: backend/.
-    image: afroz25/mern-backend
+      #context: backend/.
+    image: ${DOCKERHUB_USER}/mern-backend:${DOCKER_TAG}
     depends_on:
       db:
         condition: service_healthy
