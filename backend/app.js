@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const path = require("path");
 const cors = require("cors");
 const rateLimit = require("express-rate-limit");
-const mongoSanitize = require("express-mongo-sanitize"); // 1. Added Sanitize Import
+//const mongoSanitize = require("express-mongo-sanitize"); // 1. Added Sanitize Import
 require("dotenv").config();
 
 const authRoutes = require("./routes/authRoutes");
@@ -13,7 +13,7 @@ const profileRoutes = require("./routes/profileRoutes");
 
 app.use(express.json());
 app.use(cors());
-app.use(mongoSanitize()); // 2. Added Sanitize Middleware (Fixes NoSQL Injection Error)
+//app.use(mongoSanitize()); // 2. Added Sanitize Middleware (Fixes NoSQL Injection Error)
 
 // 3. Rate Limiting (Fixes Missing Rate Limiting Alert)
 const limiter = rateLimit({

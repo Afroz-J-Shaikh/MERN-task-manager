@@ -1,6 +1,15 @@
 @import "tailwindcss";
 
-body
-{
+/* If you have custom colors or fonts, define them here */
+@theme {
+  --font-sans: "Roboto", sans-serif;
+  
+  /* If you use specific brand colors, add them like this: */
+  --color-primary: #3b82f6; 
+}
+
+/* Force the body background so it's not white-on-white */
+body {
+  @apply bg-gray-50 text-gray-900;
   font-family: "Roboto", sans-serif;
 }
