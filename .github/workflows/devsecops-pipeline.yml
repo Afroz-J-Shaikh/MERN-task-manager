@@ -32,6 +32,6 @@ jobs:
 
   # CD : Deploy to Production
   deploy:
-  needs: trivy
-  uses: ./.github/workflows/deploy-to-server.yml
-  secrets: inherit
+    needs: trivy
+    uses: ./.github/workflows/deploy-to-server.yml
+    secrets: inherit
