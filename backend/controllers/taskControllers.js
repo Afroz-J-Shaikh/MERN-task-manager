@@ -65,8 +65,13 @@ exports.putTask = async (req, res) => {
     if (task.user != req.user.id) {
       return res.status(403).json({ status: false, msg: "You can't update task of another user" });
     }
+    
+    // Sanitize both the ID and the Body content
+    const id = String(req.params.taskId);
+    const desc = String(description);
 
-    task = await Task.findByIdAndUpdate(String(req.params.taskId), { description }, { new: true });
+    task = await Task.findByIdAndUpdate(id, { description: desc }, { new: true });
+    /*task = await Task.findByIdAndUpdate(String(req.params.taskId), { description }, { new: true });*/
     res.status(200).json({ task, status: true, msg: "Task updated successfully.." });
   }
   catch (err) {
