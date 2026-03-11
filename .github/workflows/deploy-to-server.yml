@@ -1,0 +1,53 @@
+name: deploy to server
+
+on: 
+  push:
+
+jobs:
+
+  deploy:
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        folder: [backend, frontend]
+     
+    env:
+      
+    steps:
+      
+      - name: checkout code
+        uses: actions/checkout@v4
+
+      - name: ssh to server and deploy app
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            echo "Installing required packages"
+            sudo apt-get update
+            sudo apt-get install ca-certificates curl gnupg
+
+            #Add Docker's official GPG key
+            sudo install -m 0755 -d /etc/apt/keyrings
+            curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+            sudo chmod a+r /etc/apt/keyrings/docker.gpg
+
+            #Add the Docker repository to Apt sources
+            echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+            #Update the package index and install the Docker Compose plugin
+            sudo apt-get update
+            sudo apt-get install docker-compose-plugin
+
+            #Verify the installation by checking the version
+            docker compose version
+            
+            #make directory
+            mkdir -p devsecops
+
+
+

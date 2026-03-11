@@ -1,16 +1,11 @@
 name: trivy image scan
 
 on: 
-  push:
+  workflow_call:
 
 jobs:
 
-  build-push:
-    uses: ./.github/workflows/docker-build-push.yml
-    secrets: inherit
-
   scan:
-    needs: [build-push]
     runs-on: ubuntu-latest
 
     strategy:
@@ -22,7 +17,7 @@ jobs:
         
       - name: codechekout
         uses: actions/checkout@v4
-        
+
       - name: Login to docker
         uses: docker/login-action@v3
         with:
