@@ -12,8 +12,9 @@ jobs:
   scan:
     needs: [build-push]
     runs-on: ubuntu-latest
-    fail-fast: false
+
     strategy:
+      fail-fast: false
       matrix:
         folder: [backend, frontend]
 
