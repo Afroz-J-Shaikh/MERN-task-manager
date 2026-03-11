@@ -28,7 +28,7 @@ const Home = () => {
           </div>
         ) : (
           <>
-            <h1 className='text-lg mt-8 mx-8 border-b border-b-gray-300'>Welcome {authState.user.name}</h1>
+            <h1 className='text-lg mt-8 mx-8 border-b border-b-gray-300'>Hello, Welcome {authState.user.name}</h1>
             <Tasks />
           </>
         )}
