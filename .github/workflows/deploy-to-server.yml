@@ -6,15 +6,17 @@ on:
 jobs:
 
   deploy:
-    env:
-      DOCKERHUB_USER: ${{ vars.DOCKERHUB_USER }}
-      DOCKER_TAG: ${{ format('{0}', substring(github.sha, 0, 7)) }}
+    #env:
+      #DOCKERHUB_USER: ${{ vars.DOCKERHUB_USER }}
     runs-on: ubuntu-latest
       
     steps:
       
       - name: checkout code
         uses: actions/checkout@v4
+
+      - name: Shorten github sha
+        run: echo "DOCKER_TAG=${GITHUB_SHA::7}" >> $GITHUB_ENV
 
       - name: ssh to server and install dependencies
         uses: appleboy/ssh-action@v1.0.3
@@ -69,11 +71,13 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           script: |
+            export DOCKERHUB_USER=${{ vars.DOCKERHUB_USER }}
+            export DOCKER_TAG=${{ env.DOCKER_TAG }}
             echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login  --username ${{ vars.DOCKERHUB_USER }} --password-stdin
             cd ~/devsecops
             docker compose down
             docker system prune -f
             docker compose up -d --build --pull always
-
+            echo "App Running"
 
 
