@@ -5,7 +5,7 @@ on:
 
 jobs:
  
-  dependencies-check:
+  build-push:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -29,7 +29,7 @@ jobs:
       - name: build & push 
         uses: docker/build-push-action@v6
         with:
-          context: .
+          context: ${{ matrix.folder }}
           push: true
           tags: |
             ${{ vars.DOCKERHUB_USER }}/mern-${{ matrix.folder }}:latest
