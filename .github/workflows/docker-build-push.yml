@@ -26,6 +26,9 @@ jobs:
           username: ${{ vars.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      - name: Shorten github sha
+        run: echo "SHORT_SHA=${GITHUB_SHA::7}" >> $GITHUB_ENV
+
       - name: build & push 
         uses: docker/build-push-action@v6
         with:
@@ -34,4 +37,4 @@ jobs:
           tags: |
             ${{ vars.DOCKERHUB_USER }}/mern-${{ matrix.folder }}:latest
             ${{ vars.DOCKERHUB_USER }}/mern-${{ matrix.folder }}:${{ github.ref_name }}
-            ${{ vars.DOCKERHUB_USER }}/mern-${{ matrix.folder }}:${GITHUB_SHA::7}
+            ${{ vars.DOCKERHUB_USER }}/mern-${{ matrix.folder }}:${{ env.SHORT_SHA }}
