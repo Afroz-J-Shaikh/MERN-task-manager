@@ -12,10 +12,16 @@ app.use(express.json());
 app.use(cors());
 
 const mongoUrl = process.env.MONGODB_URL;
-mongoose.connect(mongoUrl, err => {
-  if (err) throw err;
-  console.log("Mongodb connected...");
-});
+
+// Modern Mongoose 7/8 connection (Promises instead of Callbacks)
+mongoose.connect(mongoUrl)
+  .then(() => {
+    console.log("Mongodb connected...");
+  })
+  .catch((err) => {
+    console.error("Mongodb connection error:", err);
+    process.exit(1); // Stop the app if it can't connect to the DB
+  });
 
 app.use("/api/auth", authRoutes);
 app.use("/api/tasks", taskRoutes);
