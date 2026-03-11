@@ -15,6 +15,8 @@ RUN apt-get update \
 #installing dependencies
 RUN npm install --legacy-peer-deps
 
+RUN npm install react-scripts --legacy-peer-deps
+
 #copy actual source code
 COPY . .
 
@@ -31,7 +33,7 @@ FROM nginx:alpine
 RUN addgroup -S appgroup && adduser -S -G appgroup appuser
 
 #copying needed files from 1st stage
-COPY --from=builder --chown=appuser:appgroup /app/build /usr/share/nginx/html
+COPY --from=builder --chown=appuser:appgroup /app/dist /usr/share/nginx/html
 COPY --from=builder --chown=appuser:appgroup /app/nginx.conf /etc/nginx/conf.d/default.conf
 
 #change ownership of files from root to appuser
