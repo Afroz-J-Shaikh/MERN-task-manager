@@ -24,5 +24,5 @@ jobs:
       - name: validate dockerfile
         uses: hadolint/hadolint-action@v3.1.0
         with:
-          dockerfile: Dockerfile
+          dockerfile: ${{ matrix.folder }}/Dockerfile
       
