@@ -1,0 +1,28 @@
+name: dockerfile validate
+
+on:
+  push:
+
+jobs:
+
+  validate:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        folder: [backend, frontend]
+
+    defaults:
+      run:
+        working-directory: ${{ matrix.folder }}
+
+    steps:
+     
+      - name: checkout code
+        uses: actions/checkout@v4
+
+      - name: validate dockerfile
+        uses: hadolint/hadolint-action@v3.1.0
+        with:
+          dockerfile: Dockerfile
+      
