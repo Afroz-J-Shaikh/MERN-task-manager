@@ -20,7 +20,7 @@ COPY . .
 
 #2nd stage base image(distroless)
 # hadolint ignore=DL3006
-FROM gcr.io/distroless/nodejs20-debian12
+FROM gcr.io/distroless/nodejs20-debian13
 
 #set working directory
 WORKDIR /app
