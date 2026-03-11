@@ -22,7 +22,7 @@ COPY . .
 RUN npm run build
 
 #2nd stage base image
-FROM nginx:alpine
+FROM nginx:stable-alpine
 
 #adding non-root user
 RUN addgroup -S appgroup && adduser -S -G appgroup appuser
