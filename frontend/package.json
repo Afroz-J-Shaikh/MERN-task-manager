@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "dependencies": {
-    "axios": "^1.13.6",
+    "axios": "^1.15.2",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "react-redux": "^9.2.0",
@@ -24,8 +24,8 @@
     "@tailwindcss/vite": "^4.2.1",
     "@vitejs/plugin-react": "^4.3.4",
     "autoprefixer": "^10.4.27",
-    "postcss": "^8.5.8",
+    "postcss": "^8.5.14",
     "tailwindcss": "^4.2.1",
-    "vite": "^6.1.1"
+    "vite": "^6.4.2"
   }
 }
