@@ -22,7 +22,7 @@
   "author": "Aayush",
   "license": "ISC",
   "devDependencies": {
-    "concurrently": "^9.2.1"
+    "concurrently": "^9.2.5"
   },
   "dependencies": {
     "express-rate-limit": "^8.5.2"
